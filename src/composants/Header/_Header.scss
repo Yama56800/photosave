@@ -1,0 +1,98 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 0;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 0px;
+  transition: all 0.3s ease;
+  z-index: 3;
+  position: relative;
+
+  .logo {
+    img {
+      height: 100%;
+      width: 3.5rem;
+      object-fit: contain;
+      margin-left: 1.5rem;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+    position: relative;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #c549f7; // Change la couleur du texte au survol
+
+      // Crée un effet "saut" pour le texte
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -3px; // Ajustez en fonction de l'espacement souhaité
+        border-width: 0;
+        border-bottom: 1px solid #c549f7; // Couleur de la bordure du "saut"
+        animation: grow 0.3s ease forwards;
+      }
+    }
+  }
+  .link-logo {
+    &:hover {
+      &::after {
+        border-bottom: none;
+      }
+    }
+  }
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem;
+    gap: 2rem;
+    list-style-type: none;
+    font-size: 1.2rem;
+  }
+}
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  pointer-events: none; /* Empêche le pseudo-élément de capter les interactions de la souris */
+}
+
+.navbar.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.8);
+}
+@media (max-width: 1068px) {
+  .navbar {
+    display: none;
+  }
+}

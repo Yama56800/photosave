@@ -1,0 +1,98 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background: linear-gradient(to top, #151515 90%, #fff 100%);
+  background-color: #151515;
+  padding-top: 5rem;
+  color: #f8f8f8;
+  label {
+    display: none;
+  }
+  .contact-form {
+    background-color: #212121;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+
+    h2 {
+      color: #f8f8f8;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+
+        input,
+        textarea,
+        select {
+          padding: 0.75rem;
+          margin: 0.5rem;
+          background-color: #333;
+          color: #f8f8f8;
+          border: 2px solid transparent;
+          border-radius: 8px;
+          &:focus {
+            outline: none;
+            border-color: #f8f8f8;
+            background-color: #424242;
+            box-shadow: 0 0 0 2px rgba(248, 248, 248, 0.4);
+          }
+        }
+
+        textarea {
+          resize: none;
+          min-height: 80px;
+          max-height: 100px;
+        }
+      }
+
+      button {
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        background-color: transparent;
+        color: #f8f8f8;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: #f8f8f8;
+          color: #333;
+          border-color: #f8f8f8;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .contact-form {
+    width: 80% !important;
+    margin-bottom: 5rem;
+  }
+}
+
+@media (max-width: 568px) {
+  .contact-form {
+    width: 80% !important;
+    margin-bottom: 0rem;
+  }
+  textarea {
+    resize: none;
+    min-height: 60px !important;
+  }
+}
