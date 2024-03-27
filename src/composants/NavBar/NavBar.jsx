@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import logo from "../../logo-trans.webp";
+import { useEffect, useState } from "react";
 export default function Navbar() {
   const [isSticky, setIsSticky] = useState(false);
 
@@ -22,7 +21,7 @@ export default function Navbar() {
     <nav className={`navbar ${isSticky ? "sticky" : ""}`}>
       <a className="link-logo" href="#balls">
         <i className="logo">
-          <img src={logo} alt="logo" />
+          <img src="" alt="logo" />
           PHOTOSAVE
         </i>
       </a>
@@ -33,18 +32,8 @@ export default function Navbar() {
           </a>
         </li>
         <li className="nav-li">
-          <a href="#realisations" className="nav-link">
-            Réalisations
-          </a>
-        </li>
-        <li className="nav-li">
-          <a href="#competences" className="nav-link">
-            Compétences
-          </a>
-        </li>
-        <li className="nav-li">
           <a href="#Unprojet" className="nav-link">
-            Un Projet ?
+            SE CONNECTER
           </a>
         </li>
       </ul>
