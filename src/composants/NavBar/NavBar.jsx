@@ -1,29 +1,17 @@
-import { getAuth, signOut } from "firebase/auth";
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
 import UploadModal from "../ModalUpload/ModalUpload";
 
 export default function Navbar() {
   const {
     currentUser,
-    setCurrentUser,
     toggleModals,
     uploadModalShow,
     toggleUploadModal,
+    logOut,
   } = useContext(UserContext);
-  const navigate = useNavigate();
 
-  const logOut = async () => {
-    const auth = getAuth();
-    try {
-      await signOut(auth);
-      setCurrentUser(null);
-      navigate("/"); // Naviguer vers la page d'accueil
-    } catch (error) {
-      console.error(error);
-    }
-  };
   return (
     <nav>
       <Link to="/" className="brand">

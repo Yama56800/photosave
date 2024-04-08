@@ -13,28 +13,27 @@ export default function SignUpModal() {
       inputs.current.push(el);
     }
   };
-  const formRef = useRef();
 
   const handleForm = async (e) => {
     e.preventDefault();
 
-    if (
-      (inputs.current[1].value.length || inputs.current[2].value.length) < 6
-    ) {
-      setValidation("6 characters min");
+    // Ici, on s'attend à ce que les inputs soient ordonnés comme suit : [username, email, password, repeatPassword]
+    const username = inputs.current[0].value;
+    const email = inputs.current[1].value;
+    const password = inputs.current[2].value;
+    const repeatPassword = inputs.current[3].value;
+
+    if (password.length < 6) {
+      setValidation("6 characters min for password");
       return;
-    } else if (inputs.current[1].value !== inputs.current[2].value) {
+    } else if (password !== repeatPassword) {
       setValidation("Passwords do not match");
       return;
     }
 
     try {
-      const cred = await signUp(
-        inputs.current[0].value,
-        inputs.current[1].value
-      );
+      const cred = await signUp(email, password, username); // Mise à jour pour inclure le nom d'utilisateur
       setValidation("");
-      // console.log(cred);
       toggleModals("close");
       navigate("/private/private-home");
     } catch (err) {
@@ -68,14 +67,24 @@ export default function SignUpModal() {
                 </div>
 
                 <div className="modal-body">
-                  <form
-                    ref={formRef}
-                    onSubmit={handleForm}
-                    className="sign-up-form"
-                  >
+                  <form onSubmit={handleForm} className="sign-up-form">
+                    <div className="form-group">
+                      <label htmlFor="signUpUsername" className="form-label">
+                        Username
+                      </label>
+                      <input
+                        ref={addInputs}
+                        name="username"
+                        required
+                        type="text"
+                        className="form-control"
+                        id="signUpUsername"
+                      />
+                    </div>
+
                     <div className="form-group">
                       <label htmlFor="signUpEmail" className="form-label">
-                        Email adress
+                        Email Address
                       </label>
                       <input
                         ref={addInputs}
@@ -107,15 +116,15 @@ export default function SignUpModal() {
                       </label>
                       <input
                         ref={addInputs}
-                        name="pwd"
+                        name="repeatPwd"
                         required
                         type="password"
                         className="form-control"
                         id="repeatPwd"
                       />
-                      <p className="validation-error">{validation}</p>
                     </div>
 
+                    <p className="validation-error">{validation}</p>
                     <button className="button-submit">Submit</button>
                   </form>
                 </div>

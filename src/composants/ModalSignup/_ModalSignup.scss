@@ -4,9 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   background-color: rgba(0, 0, 0, 0.75);
 }
 
@@ -19,6 +17,7 @@
 .modal-box {
   position: relative;
   min-width: 400px;
+  max-width: 500px;
   background: #fff;
   border-radius: 8px;
   overflow: hidden;

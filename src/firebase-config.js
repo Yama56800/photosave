@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
@@ -15,10 +15,14 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
+// Initialise Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Exporte les instances pour l'authentification, le stockage et Firestore
 export const auth = getAuth(app);
-export const storage = getStorage(app); // Initialise et exporte Firebase Storage
-window.firebase = app;
-window.auth = auth;
+export const storage = getStorage(app);
+export const db = getFirestore(app); // Initialise et exporte Firestore
+
+// Enregistrer des instances globales peut être utile pour le débogage, mais fais attention à la sécurité et à la propreté de ton code.
+// window.firebase = app; // Optionnel, pour le débogage
+// window.auth = auth; // Optionnel, pour le débogage
