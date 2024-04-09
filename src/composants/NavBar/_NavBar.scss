@@ -3,7 +3,7 @@ nav {
   justify-content: space-between;
   align-items: center;
 
-  background-color: #f8f9fa;
+  background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   img {
     height: 100%;
@@ -34,22 +34,22 @@ nav {
 }
 
 .button-sign-up {
-  background-color: #007bff;
+  background-color: #2e7f2a;
   color: #fff;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #0a1c1c;
   }
 }
 
 .button-sign-in,
 .button-upload {
-  background-color: #007bff;
+  background-color: #2e7f2a;
   color: #fff;
   margin-left: 0.5rem;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #0a1c1c;
   }
 }
 

@@ -78,9 +78,9 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
   &:focus {
-    border-color: #80bdff;
+    border-color: #2e7f2a;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(4, 117, 13, 0.25);
   }
 }
 
@@ -96,8 +96,8 @@
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  background-color: #007bff;
-  border: 1px solid #007bff;
+  background-color: #2e7f2a;
+  border: 1px solid #2e7f2a;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
@@ -106,7 +106,7 @@
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
   &:hover {
-    background-color: #0056b3;
-    border-color: #004095;
+    background-color: #0a1c1c;
+    border-color: #0a1c1c;
   }
 }

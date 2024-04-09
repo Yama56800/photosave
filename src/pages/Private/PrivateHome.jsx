@@ -9,11 +9,19 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Context/userContext";
 import DeleteImageButton from "../../composants/DeleteBtn/DeleteBtn";
+import ImageModal from "../../composants/ModalBigImg/ModalBigImg";
 
 export default function PrivateHome() {
   const [userEmail, setUserEmail] = useState("");
-  const { uploadedImagesInfo, refreshFlag, addExistingImagesInfo } =
-    useContext(UserContext);
+  const {
+    uploadedImagesInfo,
+    refreshFlag,
+    addExistingImagesInfo,
+    openImageModal,
+    closeImageModal,
+    isImageModalOpen,
+    selectedImageUrl,
+  } = useContext(UserContext);
   const auth = getAuth();
   const storage = getStorage();
 
@@ -61,7 +69,11 @@ export default function PrivateHome() {
       <h1 className="display-3 text-light mb-4">Your Gallery !</h1>
       <div className="gallery-content">
         {uploadedImagesInfo.map((imageInfo, index) => (
-          <div className="img-container" key={index}>
+          <div
+            className="img-container"
+            key={index}
+            onClick={() => openImageModal(imageInfo.url)} // Utilisation de openImageModal directement
+          >
             <img
               className="img-user"
               src={imageInfo.url}
@@ -71,6 +83,9 @@ export default function PrivateHome() {
           </div>
         ))}
       </div>
+      {isImageModalOpen && ( // Correction ici pour utiliser la condition correctement
+        <ImageModal imageUrl={selectedImageUrl} onClose={closeImageModal} />
+      )}
     </div>
   );
 }

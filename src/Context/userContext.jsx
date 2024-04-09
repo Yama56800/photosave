@@ -1,19 +1,12 @@
-import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import PropTypes from "prop-types";
 import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  deleteObject,
-} from "firebase/storage";
-import { storage } from "../firebase-config";
-import {
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
+import PropTypes from "prop-types";
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase-config";
 
 export const UserContext = createContext();
@@ -100,6 +93,19 @@ export function UserContextProvider({ children }) {
   const addExistingImagesInfo = (imagesInfo) => {
     setUploadedImagesInfo(imagesInfo);
   };
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  const openImageModal = (imageUrl) => {
+    console.log("Ouverture de la modal avec l'image URL :", imageUrl);
+    setSelectedImageUrl(imageUrl);
+    setIsImageModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
+    setSelectedImageUrl(null); // Optionnel, pour nettoyer l'URL de l'image précédente
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -118,7 +124,11 @@ export function UserContextProvider({ children }) {
         uploadedImagesInfo,
         addExistingImagesInfo,
         addUploadedImageInfo,
-        removeUploadedImageInfo, // La fonction pour ajouter une nouvelle URL d'image
+        removeUploadedImageInfo,
+        isImageModalOpen,
+        selectedImageUrl,
+        openImageModal,
+        closeImageModal, // La fonction pour ajouter une nouvelle URL d'image
         logOut, // Fonction pour contrôler l'affichage
       }}
     >
