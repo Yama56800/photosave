@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../Context/userContext";
+import logo from "../../assets/images/logo/logo.webp";
 import UploadModal from "../ModalUpload/ModalUpload";
 
 export default function Navbar() {
@@ -15,10 +16,10 @@ export default function Navbar() {
   return (
     <nav>
       <Link to="/" className="brand">
-        AuthJS
+        <img src={logo} alt="" />
       </Link>
 
-      <div>
+      <div className="nav-btn">
         {!currentUser && ( // Affiche ces boutons uniquement si l'utilisateur n'est pas connecté
           <>
             <button

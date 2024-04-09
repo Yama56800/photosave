@@ -4,11 +4,17 @@ import { UserContext } from "../../Context/userContext";
 import { storage } from "../../firebase-config";
 import { auth } from "../../firebase-config";
 const UploadModal = () => {
-  const { uploadModalShow, toggleUploadModal } = useContext(UserContext);
+  const {
+    uploadModalShow,
+    toggleUploadModal,
+    addUploadedImage,
+    refreshUserImages,
+    addUploadedImageInfo,
+    // Assure-toi d'importer refreshUserImages correctement depuis le contexte
+  } = useContext(UserContext);
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
-
   const handleChangeFile = (e) => {
     setFile(e.target.files[0]);
   };
@@ -20,23 +26,34 @@ const UploadModal = () => {
   const handleChangeCategory = (e) => {
     setCategory(e.target.value);
   };
-
   const handleUpload = async () => {
     if (file) {
       const uploadDate = new Date();
-      console.log(auth.currentUser, "id");
-      const userId = auth.currentUser.uid; // Obtenez l'UID de l'utilisateur actuellement connecté
-      const fileRef = ref(storage, `users/${userId}/${file.name}`); // Modifiez le chemin de référence
+      const filePath = `users/${auth.currentUser.uid}/${file.name}`;
+      const fileRef = ref(storage, filePath);
+
       try {
         await uploadBytes(fileRef, file);
         const url = await getDownloadURL(fileRef);
-        console.log({ url, name, category, uploadDate });
+
+        addUploadedImageInfo({ url, name: file.name });
+        // Au lieu d'ajouter juste l'URL, ajoute un objet contenant à la fois l'URL et le nom du fichier
+        const imageInfo = {
+          url,
+          name: file.name, // Nom du fichier
+          category, // Catégorie si tu souhaites également la conserver
+          uploadDate: uploadDate.toISOString(), // Date d'upload
+        };
+
+        addUploadedImage(imageInfo); // Ajuste cette fonction pour gérer un objet
+        refreshUserImages();
         toggleUploadModal();
       } catch (error) {
         console.error(error);
       }
     }
   };
+
   return (
     <div className={`modal ${uploadModalShow ? "is-active" : ""}`}>
       <div className="modal-background" onClick={toggleUploadModal}></div>

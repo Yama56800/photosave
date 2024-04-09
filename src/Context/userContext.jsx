@@ -1,61 +1,53 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import PropTypes from "prop-types";
 import {
-  signOut,
-  createUserWithEmailAndPassword,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  deleteObject,
+} from "firebase/storage";
+import { storage } from "../firebase-config";
+import {
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config";
-import PropTypes from "prop-types";
+import { auth } from "../firebase-config";
 
 export const UserContext = createContext();
 
 export function UserContextProvider({ children }) {
-  const navigate = useNavigate();
-
-  const signUp = async (email, pwd, username) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        pwd
-      );
-      const user = userCredential.user;
-
-      // Stocke le nom d'utilisateur dans Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        username: username,
-        email: email,
-      });
-
-      setCurrentUser(user);
-      navigate("/private/private-home"); // Redirige après l'inscription réussie
-    } catch (error) {
-      console.error("Erreur lors de la création de l'utilisateur :", error);
-      throw error;
-    }
-  };
-
+  console.log("test");
+  const signUp = (email, pwd) =>
+    createUserWithEmailAndPassword(auth, email, pwd);
   const signIn = (email, pwd) => signInWithEmailAndPassword(auth, email, pwd);
 
   const [currentUser, setCurrentUser] = useState(null);
   const [loadingData, setLoadingData] = useState(true);
-
+  console.log("MAJ", currentUser);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setCurrentUser(currentUser);
       setLoadingData(false);
     });
 
     return unsubscribe;
   }, []);
+  // Dans UserContextProvider
+  const [refreshFlag, setRefreshFlag] = useState(false);
 
+  const refreshUserImages = () => {
+    setRefreshFlag((prevFlag) => !prevFlag); // Bascule la valeur pour déclencher une mise à jour
+  };
+
+  // modal
   const [modalState, setModalState] = useState({
     signUpModal: false,
     signInModal: false,
   });
+  const [uploadedImages, setUploadedImages] = useState([]);
 
   const toggleModals = (modal) => {
     if (modal === "signIn") {
@@ -63,34 +55,51 @@ export function UserContextProvider({ children }) {
         signUpModal: false,
         signInModal: true,
       });
-    } else if (modal === "signUp") {
+    }
+    if (modal === "signUp") {
       setModalState({
         signUpModal: true,
         signInModal: false,
       });
-    } else if (modal === "close") {
+    }
+    if (modal === "close") {
       setModalState({
         signUpModal: false,
         signInModal: false,
       });
     }
   };
-
+  const navigate = useNavigate();
   const logOut = async () => {
     try {
       await signOut(auth);
       setCurrentUser(null);
       navigate("/");
+      console.log("ici"); // Naviguer vers la page d'accueil
     } catch (error) {
-      console.error("Erreur lors de la déconnexion :", error);
+      console.error(error);
     }
   };
-
   const [uploadModalShow, setUploadModalShow] = useState(false);
   const toggleUploadModal = () => {
     setUploadModalShow(!uploadModalShow);
   };
+  const addUploadedImage = (imageUrl) => {
+    setUploadedImages((prevImages) => [...prevImages, imageUrl]);
+  };
+  const [uploadedImagesInfo, setUploadedImagesInfo] = useState([]);
+  const addUploadedImageInfo = (imageInfo) => {
+    setUploadedImagesInfo((prev) => [...prev, imageInfo]);
+  };
+  const removeUploadedImageInfo = (imageName) => {
+    setUploadedImagesInfo((prev) =>
+      prev.filter((imageInfo) => imageInfo.name !== imageName)
+    );
+  };
 
+  const addExistingImagesInfo = (imagesInfo) => {
+    setUploadedImagesInfo(imagesInfo);
+  };
   return (
     <UserContext.Provider
       value={{
@@ -99,17 +108,24 @@ export function UserContextProvider({ children }) {
         signIn,
         signUp,
         currentUser,
-        setCurrentUser,
-        uploadModalShow,
+        setCurrentUser, // Ajoutez ceci
+        uploadModalShow, // Nouvel état pour l'affichage de la modal
         toggleUploadModal,
-        logOut,
+        uploadedImages, // L'état contenant les URLs des images
+        addUploadedImage,
+        refreshFlag, // Ajoute ceci
+        refreshUserImages,
+        uploadedImagesInfo,
+        addExistingImagesInfo,
+        addUploadedImageInfo,
+        removeUploadedImageInfo, // La fonction pour ajouter une nouvelle URL d'image
+        logOut, // Fonction pour contrôler l'affichage
       }}
     >
       {!loadingData && children}
     </UserContext.Provider>
   );
 }
-
 UserContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

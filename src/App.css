@@ -1,9 +1,0 @@
-:root {
-  font-family: "Fira Sans", sans-serif;
-}
-.footer {
-  display: flex;
-  justify-content: center;
-  border-top: 2px solid #ccc;
-  padding: 1rem 0 1.5rem;
-}
