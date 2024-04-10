@@ -8,6 +8,7 @@
   align-items: center;
   margin-top: 2rem;
   background-color: black;
+  color: whitesmoke;
 }
 .gallery-content {
   display: flex;
