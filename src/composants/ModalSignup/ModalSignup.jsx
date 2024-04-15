@@ -36,7 +36,7 @@ export default function SignUpModal() {
       setValidation("");
       // console.log(cred);
       toggleModals("close");
-      navigate("/private/private-home");
+      navigate("/photosave/private/private-home");
     } catch (err) {
       if (err.code === "auth/invalid-email") {
         setValidation("Email format invalid");

@@ -28,7 +28,7 @@ export default function SignInModal() {
       setValidation("");
       // console.log(cred);
       toggleModals("close");
-      navigate("/private/private-home");
+      navigate("/photosave/private/private-home");
     } catch {
       setValidation("Wopsy, email and/or password incorrect");
     }

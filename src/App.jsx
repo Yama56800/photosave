@@ -27,9 +27,12 @@ function App() {
       <ModalUpload />
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/private" element={<Private />}>
-          <Route path="/private/private-home" element={<PrivateHome />} />
+        <Route path="/photosave/" element={<Home />} />
+        <Route path="/photosave/private" element={<Private />}>
+          <Route
+            path="/photosave/private/private-home"
+            element={<PrivateHome />}
+          />
         </Route>
         {/* <Route path="/Sign-In" element={<Sign_in />} />
 	        <Route path="/Sign-up" element={<Sign_up />} />

@@ -67,7 +67,7 @@ export function UserContextProvider({ children }) {
     try {
       await signOut(auth);
       setCurrentUser(null);
-      navigate("/");
+      navigate("/photosave/");
       console.log("ici"); // Naviguer vers la page d'accueil
     } catch (error) {
       console.error(error);

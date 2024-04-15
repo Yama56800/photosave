@@ -6,7 +6,7 @@ export default function Private() {
   const { currentUser } = useContext(UserContext);
 
   if (!currentUser) {
-    return <Navigate to="/" />;
+    return <Navigate to="/photosave" />;
   }
 
   return (
