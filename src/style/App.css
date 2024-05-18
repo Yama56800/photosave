@@ -55,3 +55,9 @@
 
   width: 100%;
 }
+@media (max-width: 768px) {
+  .img-user {
+    width: 90vw;
+    height: 50vh;
+  }
+}

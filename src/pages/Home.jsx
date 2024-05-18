@@ -13,13 +13,10 @@ export default function Home() {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundSize: "cover",
-          height: "100vh",
         }}
       >
         <h1>PHOTOSAVE</h1>
-        <h1 className="display-3 text-light">
-          {currentUser ? "Welcome buddy" : "Hi, Sign Up or Sign In"}
-        </h1>
+
         <h2>Stockez vos photo en ligne !</h2>
         <div className="landing-content" id="landing-content">
           <img
